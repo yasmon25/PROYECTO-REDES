@@ -1,0 +1,146 @@
+.top-background{
+	text-align: center;
+	width: 1920px;
+	padding: 50px 0 100px;
+	background: linear-gradient(to left, #e177ff , #747cff);
+
+}
+
+h2{
+	font-family: roboto;
+	color: white;
+	padding-top: 100px;
+}
+p{
+	font-family: roboto;
+	color: white;
+	font size: 16px;
+}
+
+form{
+	font-family: roboto;
+	font color:gray;
+	padding: 50px;
+	width: 600px;
+	background-color: #f0f7ff;
+	box-shadow:20px 20px 67px -44px #000000;
+	margin: -93px auto 0;
+
+}
+
+input[type=text], select{
+	font-family: roboto;
+	width: 420px;
+	height: 36px;
+	padding: 10px;
+	border-radius: 3px;
+	color: red;
+	border: 1px solid #ccc;
+	
+
+}
+
+input[type=submit]{
+	height: 42px;
+	width: 120px;
+	border-radius: 3px;
+	border: none;
+	color: #ffffff;
+	background-color: #328dff;
+}
+
+input[type=reset]{
+	height: 42px;
+	width: 120px;
+	border-radius: 3px;
+	border: none;
+	color: #ffffff;
+	background-color: #2474f3;
+}
+
+.mybutton{
+	color: white;
+	height: 42px;
+	width: 120px;
+	border-radius: 3px;
+	border: none;
+	background-color:#55ae47;
+	margin: 2px;
+}
+
+.mybutton:hover{
+	color: white;
+	background-color: #409633;
+	cursor: pointer;
+	
+}
+
+.mybutton1:hover{
+	color: white;
+	background-color: #1766e4;
+	cursor: pointer;
+	
+}
+
+table{
+	width: 700px;
+	background-color: #ffffff;
+	margin: 100px auto 0;
+	border-collapse: collapse;
+	text-align: center;
+
+}
+
+#tablerow{
+	background: gray;
+	height: 80px;
+
+}
+
+#menu{
+	list-style-type: none;
+	padding: 0;
+	width: 1140px;
+	margin: 0 auto;
+}
+
+
+#menu li{
+	list-style-type: none;
+	float: left;
+	margin: 0;
+
+}
+
+
+#menu li a{
+	text-decoration: none;
+	color: white;
+	font-family: roboto;
+	padding: 20px;
+
+}
+
+#menu li a:hover{
+	color: #ff99bc;
+	transition: 1 sec easy;
+
+}
+
+#menu li ul{
+	background-color: #da76ff;
+	padding: 10px;
+	margin: 20px;
+
+}
+#menu li ul li{
+	float: none;
+	padding: 10px;
+	color:  #000000;
+	
+}
+
+#sub{
+	color:black;
+	
+}

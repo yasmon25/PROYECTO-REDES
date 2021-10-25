@@ -1,0 +1,38 @@
+{% block title %}ADMINISTRACIÒN DE PROTOCOLOS{% endblock %}
+
+{% block content %}
+<head>
+    <title>PROTOCOLOS</title>
+  </head>
+  <body>    
+	<form action="" method="post">
+	      <h1>PROTOCOLO RIP</h1>
+	      <label for="">Ruta RIP: </label>
+	      <input type="text" name="ruta-rip">
+ 	      <input type="submit" value="Enviar">
+  	</form>
+
+	<form action="" method="post">
+	      <h1>PROTOCOLO OSPF</h1>
+	      <label for="">Process ID: </label>
+	      <input type="text" name="process-id">
+	      <label for="">Direcciòn de Red: </label>
+	      <input type="text" name="direccion-red">
+	      <label for="">WILDCARD: </label>
+	      <input type="text" name="wildcard">
+	      <label for="">Àrea ID: </label>
+	      <input type="text" name="area-id">
+ 	      <input type="submit" value="Enviar">
+  	</form>
+  </body>
+{% endblock %}
+
+
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-newform.css')}}" >
+{% endblock %}

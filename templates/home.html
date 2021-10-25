@@ -1,0 +1,39 @@
+{% block title %}HOME{% endblock %}
+
+{% block content %}
+<head>
+    <title>REDES</title>
+  </head>
+  <body>    
+	<main>
+	  <h1>Bienvenido</h1>
+	  <h2>Proyecto del Equipo Dinamita.</h2>
+
+	  <button class="toggle-overlay">Inicio</button>
+	</main>
+
+
+	<aside>
+	  <div class="outer-close toggle-overlay">
+	    <a class="close"><span></span></a>
+	  </div>
+	  <nav id='menu-inicio'>
+	    <ul>
+	      <li><a href="http://127.0.0.1:5000/login">LOGIN</a></li>
+	      <li><a href="http://127.0.0.1:5000/registro">Registrarse</a></li>
+	    </ul>
+	  </nav>
+	</aside>
+  </body>
+{% endblock %}
+
+
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{url_for('static',filename='js/script.js')}}"></script>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" >
+{% endblock %}
