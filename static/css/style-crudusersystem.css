@@ -1,0 +1,17 @@
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+table {
+    width: 80%
+}
+
+th, td {
+    color: white;
+    text-align: center;
+    padding: 8px;
+}
