@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 from database.db import new_user, get_user, get_users, delete_user, update_user
+from routers.userrouter import new_user_routers, del_user_routers, get_users_routers
 
 app=Flask(__name__)
 
@@ -50,9 +51,51 @@ def menu ():
 def adminpro ():
 	return render_template('adminpro.html')
 
-@app.route('/userrouter')
+@app.route('/cruduserrouter', methods=['GET', 'POST'])
 def userrouter ():
-	return render_template('userrouter.html')
+    if request.method == 'POST':        
+        username = ''
+        privilige = '15'
+
+        return render_template('updateuserrouter.html', privilige=privilige, username=username)
+    else:
+        users = get_users_routers()
+        return render_template('cruduserrouter.html', users = users)
+
+@app.route('/updateuserrouter', methods=['GET', 'POST'])
+def updateuserrouter ():
+    if request.method == 'POST':
+        username_old = request.form['username_old']
+        username = request.form['username']
+        privilige = request.form['privilige']
+        password = request.form['password']
+
+        error = 'ERROR (updateuserrouter): '
+
+        try:
+            if username_old != '':
+                error = error + del_user_routers(username_old)
+            error = error + new_user_routers(username, password, privilige)     
+      
+            return redirect('/cruduserrouter')
+        except ValueError:
+            return error + ValueError + ' '
+    else:
+        username = request.args.get('username')
+        privilige = request.args.get('privilige')
+	    
+        return render_template('updateuserrouter.html', privilige=privilige, username=username)
+
+@app.route('/deleteuserrouter/<string:username>')
+def deleteuserrouter(username):
+    
+    error = 'ERROR (deleteuserrouter): '
+
+    try:
+        error = error + del_user_routers(username)
+        return redirect('/cruduserrouter')
+    except ValueError:
+        return error + ValueError + ' '
 
 @app.route('/crudusersystem')
 def crudusersystem():

@@ -1,0 +1,51 @@
+{% block title %}CRUD USUARIOS DE ROUTERS{% endblock %}
+
+{% block content %}
+<head>
+    <title>REDES</title>
+  </head>
+  <body>    
+	<main>
+	  <h1>CRUD Usuarios de Routers</h1>
+	</main>
+
+    <table>
+        <tr>
+            <th>Nombre de Usuario</th>
+            <th>Grado de Privilegio</th>
+            <th>Modificar</th>
+            <th>Eliminar</th>
+        </tr>
+        {% for user in users %}    
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td><a href="/updateuserrouter?username={{user[0]}}&privilige={{user[1]}}">Modificar</a></td>
+                <td><a href="/deleteuserrouter/{{user[0]}}">Eliminar</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <form action='/cruduserrouter' method='POST'>
+        <input type="submit" value="Nuevo Usuario">
+    </form>
+
+    <p class="text--center">¿Deseas Regresar al menù? <a href="http://127.0.0.1:5000/menu">Menù</a> <svg class="icon">
+        <use xlink:href="#icon-arrow-right"></use>
+      </svg></p>
+	
+  </body>
+{% endblock %}
+
+
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{url_for('static',filename='js/script.js')}}"></script>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" >
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-crudusersystem.css')}}" >
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-newform.css')}}" >
+{% endblock %}
