@@ -1,9 +1,8 @@
 config t
-no router ospf 1
-no router rip
 router eigrp 1
 network 10.0.5.0
 network {direccion}
 redistribute rip
 redistribute ospf 1
+exit
 exit

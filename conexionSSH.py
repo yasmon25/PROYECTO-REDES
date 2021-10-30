@@ -1,8 +1,10 @@
 import paramiko, getpass, time, json
 
-username = "cisco"
-password = "cisco"
+username = "root"
+password = "root"
 
+with open('ipOSPF.json', 'r') as x:
+    hosts2 = json.load(x)
 
 
 max_buffer = 65535
@@ -15,15 +17,15 @@ def RIP(router,direccion):
     contadorComando = 0
     conexion = paramiko.SSHClient()
     conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    conexion.connect(router, username=usuario, password=password, look_for_keys=False, allow_agent=False)
+    conexion.connect(direccion, username=username, password=password, look_for_keys=False, allow_agent=False)
     nueva_conexion = conexion.invoke_shell()
     salida = clear_buffer(nueva_conexion)
     time.sleep(2)
     with open("RIP.txt", 'r') as f:
-        for comando in comandos:
+        for comando in f:
             contadorComando+=1
-            if contadorComando==8:
-                comando=comando.format(direccion=nombre_ruta)
+            if contadorComando==6:
+                comando=comando.format(direccion=hosts2[router]['ip'])
             nueva_conexion.send(comando.rstrip()+"\n")
             time.sleep(2)
             salida = nueva_conexion.recv(max_buffer)
@@ -35,15 +37,15 @@ def OSPF(router,direccion):
     contadorComando = 0
     conexion = paramiko.SSHClient()
     conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    conexion.connect(router, username=usuario, password=password, look_for_keys=False, allow_agent=False)
+    conexion.connect(direccion, username=username, password=password, look_for_keys=False, allow_agent=False)
     nueva_conexion = conexion.invoke_shell()
     salida = clear_buffer(nueva_conexion)
     time.sleep(2)
-    with open("OSPF.txt", 'r') as f:
-        for comando in comandos:
+    with open("OSPF1.txt", 'r') as f:
+        for comando in f:
             contadorComando+=1
-            if contadorComando==6:
-                comando=comando.format(direccion=nombre_ruta)
+            if contadorComando==4:
+                comando=comando.format(direccion=hosts2[router]['ip'])
             nueva_conexion.send(comando.rstrip()+"\n")
             time.sleep(2)
             salida = nueva_conexion.recv(max_buffer)
@@ -55,14 +57,14 @@ def EIGRP(router,direccion):
     contadorComando = 0
     conexion = paramiko.SSHClient()
     conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    conexion.connect(router, username=usuario, password=password, look_for_keys=False, allow_agent=False)
+    conexion.connect(router, username=username, password=password, look_for_keys=False, allow_agent=False)
     nueva_conexion = conexion.invoke_shell()
     salida = clear_buffer(nueva_conexion)
     time.sleep(2)
     with open("EIGRP.txt", 'r') as f:
-        for comando in comandos:
+        for comando in f:
             contadorComando+=1
-            if contadorComando==6:
+            if contadorComando==4:
                 comando=comando.format(direccion=nombre_ruta)
             nueva_conexion.send(comando.rstrip()+"\n")
             time.sleep(2)
@@ -75,7 +77,7 @@ def UsuarioTopo(nombreR,contraR,nivelR,router):
     contadorComando = 0
     conexion = paramiko.SSHClient()
     conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    conexion.connect(router, username=usuario, password=password, look_for_keys=False, allow_agent=False)
+    conexion.connect(router, username=username, password=password, look_for_keys=False, allow_agent=False)
     nueva_conexion = conexion.invoke_shell()
     salida = clear_buffer(nueva_conexion)
     time.sleep(2)

@@ -146,20 +146,21 @@ def deleteusersystem(_id):
 @app.route('/rip',methods=['POST'])
 def rip():
     Router = request.form['RIPopcion']
+    print(Router,hosts[Router]['ip'])
     RIP(Router,hosts[Router]['ip'])
-    return render_template('/adminpro')
+    return render_template('adminpro.html')
 
 @app.route('/ospf',methods=['POST'])
 def ospf():
     Router = request.form['OSPFopcion']
-    OSPF(Router,hosts2[Router]['ip'])
-    return render_template('/adminpro')
+    OSPF(Router,hosts[Router]['ip'])
+    return render_template('adminpro.html')
 
 @app.route('/eigrp',methods=['POST'])
 def eigrp():
     Router = request.form['EIGRPopcion']
     EIGRP(Router,hosts[Router]['ip'])
-    return render_template('/adminpro')    
+    return render_template('adminpro.html')    
     
 
 if __name__ == '__main__':

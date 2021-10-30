@@ -1,12 +1,10 @@
 config t
-no router eigrp 1
-no router ospf 1
 router rip
 no auto-summary
 version 2
 network 10.0.5.0
 network {direccion}
-redistribute eigrp 1
-redistribute ospf 1
+redistribute eigrp 1 metric 1
+redistribute ospf 1 metric 1
 exit
 exit
