@@ -1,0 +1,46 @@
+{% block title %}CRUD USUARIOS DEL SISTEMA{% endblock %}
+
+{% block content %}
+<head>
+    <title>REDES</title>
+  </head>
+  <body>    
+	<main>
+	  <h1>CRUD Usuarios del Sistema</h1>
+	</main>
+
+    <table>
+        <tr>
+            <th>Nombre de Usuario</th>
+            <th>Fecha de Alta</th>
+            <th>Modificar</th>
+            <th>Eliminar</th>
+        </tr>
+        {% for user in users %}    
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.date_added }}</td>
+                <td><a href="/updateusersystem?_id={{user._id}}&username={{user.username}}">Modificar</a></td>
+                <td><a href="/deleteusersystem/{{user._id}}">Eliminar</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p class="text--center">¿Deseas Regresar al menù? <a href="http://127.0.0.1:5000/menu">Menù</a> <svg class="icon">
+        <use xlink:href="#icon-arrow-right"></use>
+      </svg></p>
+	
+  </body>
+{% endblock %}
+
+
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{url_for('static',filename='js/script.js')}}"></script>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" >
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-crudusersystem.css')}}" >
+{% endblock %}
