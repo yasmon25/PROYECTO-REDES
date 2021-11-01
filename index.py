@@ -1,16 +1,10 @@
 import json
 from flask import Flask, render_template, request, redirect, url_for
-from conexionSSH import *
+from routers.new_protocol import get_protocol, new_protocol as new_protocol_routers
 from database.db import new_user, get_user, get_users, delete_user, update_user
-from routers.userrouter import new_user_routers, del_user_routers, get_users_routers
+from routers.user_router import new_user_routers, del_user_routers, get_users_routers
 
 app=Flask(__name__)
-
-with open('dispositivos.json', 'r') as f:
-    hosts = json.load(f)
-
-with open('ipOSPF.json', 'r') as f:
-    hosts2 = json.load(f)
 
 @app.route('/')
 def home ():
@@ -53,114 +47,113 @@ def registro ():
 def menu ():
 	return render_template('menu.html')
 
-@app.route('/adminpro')
-def adminpro ():
-	return render_template('adminpro.html')
+@app.route('/admin_pro', methods=['GET', 'POST'])
+def admin_pro ():
+    if request.method == 'POST':    
+        protocol = request.form['new_protocol']
+        return render_template('new_protocol.html', protocol=protocol)
+    else:
+        actual_protocol = get_protocol()
+        return render_template('admin_pro.html', actual_protocol=actual_protocol)
 
-@app.route('/cruduserrouter', methods=['GET', 'POST'])
+@app.route('/new_protocol', methods=['GET', 'POST'])
+def new_protocol():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        protocol = request.form['protocol']
+
+        new_protocol_routers(protocol, username, password)
+
+        return render_template('admin_pro.html', actual_protocol=protocol)
+    else:
+        return render_template('new_protocol.html')
+
+@app.route('/crud_user_router', methods=['GET', 'POST'])
 def userrouter ():
     if request.method == 'POST':        
         username = ''
         privilige = '15'
 
-        return render_template('updateuserrouter.html', privilige=privilige, username=username)
+        return render_template('update_user_router.html', privilige=privilige, username=username)
     else:
         users = get_users_routers()
-        return render_template('cruduserrouter.html', users = users)
+        return render_template('crud_user_router.html', users = users)
 
-@app.route('/updateuserrouter', methods=['GET', 'POST'])
-def updateuserrouter ():
+@app.route('/update_user_router', methods=['GET', 'POST'])
+def update_user_router ():
     if request.method == 'POST':
         username_old = request.form['username_old']
         username = request.form['username']
         privilige = request.form['privilige']
         password = request.form['password']
 
-        error = 'ERROR (updateuserrouter): '
+        error = 'ERROR (update_user_router): '
 
         try:
             if username_old != '':
                 error = error + del_user_routers(username_old)
             error = error + new_user_routers(username, password, privilige)     
       
-            return redirect('/cruduserrouter')
+            return redirect('/crud_user_router')
         except ValueError:
             return error + ValueError + ' '
     else:
         username = request.args.get('username')
         privilige = request.args.get('privilige')
 	    
-        return render_template('updateuserrouter.html', privilige=privilige, username=username)
+        return render_template('update_user_router.html', privilige=privilige, username=username)
 
-@app.route('/deleteuserrouter/<string:username>')
-def deleteuserrouter(username):
+@app.route('/delete_user_router/<string:username>')
+def delete_user_router(username):
     
-    error = 'ERROR (deleteuserrouter): '
+    error = 'ERROR (delete_user_router): '
 
     try:
         error = error + del_user_routers(username)
-        return redirect('/cruduserrouter')
+        return redirect('/crud_user_router')
     except ValueError:
         return error + ValueError + ' '
 
-@app.route('/crudusersystem')
-def crudusersystem():
+@app.route('/crud_user_system')
+def crud_user_system():
     users = get_users()
 
     if users.count() == 0:
         return redirect('/login')
 
-    return render_template('crudusersystem.html', users = users)
+    return render_template('crud_user_system.html', users = users)
 
-@app.route('/updateusersystem', methods=['GET', 'POST'])
-def updateusersystem ():
+@app.route('/update_user_system', methods=['GET', 'POST'])
+def update_user_system ():
     if request.method == 'POST':
         _id = request.form['_id']
         username = request.form['username']
         password = request.form['password']
 
-        error = 'ERROR (updateusersystem): '
+        error = 'ERROR (update_user_system): '
 
         try:
             error = error + update_user(_id, username, password)
-            return redirect('/crudusersystem')
+            return redirect('/crud_user_system')
         except ValueError:
             return error + ValueError + ' '
     else:
         _id = request.args.get('_id')
         username = request.args.get('username')
 	    
-        return render_template('updateusersystem.html', _id=_id, username=username)
+        return render_template('update_user_system.html', _id=_id, username=username)
 
-@app.route('/deleteusersystem/<string:_id>')
-def deleteusersystem(_id):
+@app.route('/delete_user_system/<string:_id>')
+def delete_user_system(_id):
     
-    error = 'ERROR (deleteusersystem): '
+    error = 'ERROR (delete_user_system): '
 
     try:
         error = error + delete_user(_id)
-        return redirect('/crudusersystem')
+        return redirect('/crud_user_system')
     except ValueError:
-        return error + ValueError + ' '
-
-@app.route('/rip',methods=['POST'])
-def rip():
-    Router = request.form['RIPopcion']
-    print(Router,hosts[Router]['ip'])
-    RIP(Router,hosts[Router]['ip'])
-    return render_template('adminpro.html')
-
-@app.route('/ospf',methods=['POST'])
-def ospf():
-    Router = request.form['OSPFopcion']
-    OSPF(Router,hosts[Router]['ip'])
-    return render_template('adminpro.html')
-
-@app.route('/eigrp',methods=['POST'])
-def eigrp():
-    Router = request.form['EIGRPopcion']
-    EIGRP(Router,hosts[Router]['ip'])
-    return render_template('adminpro.html')    
+        return error + ValueError + ' '  
     
 
 if __name__ == '__main__':
