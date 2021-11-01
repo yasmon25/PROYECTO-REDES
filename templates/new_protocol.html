@@ -1,20 +1,21 @@
-{% block title %}Actualización de datos{% endblock %}
 
 {% block content %}
-  <head>
-    <title>Actualización de datos</title>
+<head>
+    <title>Protocolo Nuevo</title>
   </head>
   <body class="align">
 
   <div class="grid">
 
-    <form action="/updateusersystem" method="POST" class="form login">
+    <h1> Protocolo nuevo </h1>
+
+    <form action="/new_protocol" method="POST" class="form login">
 
       <div class="form__field">
         <label for="login__username"><svg class="icon">
             <use xlink:href="#icon-user"></use>
           </svg><span class="hidden">Username</span></label>
-        <input autocomplete="username" id="username" type="text" name="username" class="form__input" value="{{username}}" required>
+        <input autocomplete="username" id="username" type="text" name="username" class="form__input" placeholder="Username" required>
       </div>
 
       <div class="form__field">
@@ -23,15 +24,19 @@
           </svg><span class="hidden">Password</span></label>
         <input id="password" type="password" name="password" class="form__input" placeholder="Password" required>
       </div>
-
-        <input id="_id" type="hidden" name="_id" value="{{_id}}" >
+        
+        <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-lock"></use>
+          </svg><span class="hidden">Protocolo</span></label>
+        <input id="protocol" type="text" name="protocol" class="form__input" readonly value="{{ protocol }}">
+      </div>
 
       <div class="form__field">
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Aceptar">
       </div>
 
     </form>
-
   </div>
 
   <svg xmlns="http://www.w3.org/2000/svg" class="icons">

@@ -1,0 +1,37 @@
+{% block title %}ADMINISTRACIÒN DE PROTOCOLOS{% endblock %}
+
+{% block content %}
+<head>
+    <title>PROTOCOLOS</title>
+  </head>
+  <body>
+    <table>
+        <tr>
+            <th>Router</th>
+            <th>Protocolo activo</th>
+        </tr>
+        {% for id_router in range(4) %}    
+            <tr>
+                <td>R{{ id_router }}</td>
+                <td>{{ actual_protocol }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="/admin_pro" method="POST">
+	      <h1>Selección de nuevo Protocolo</h1>
+	      <input type="submit" name="new_protocol" value="RIP">
+	      <input type="submit" name="new_protocol" value="OSPF">
+	      <input type="submit" name="new_protocol" value="EIGRP">
+  	</form>
+  </body>
+{% endblock %}
+
+
+
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-newform.css')}}" >
+{% endblock %}

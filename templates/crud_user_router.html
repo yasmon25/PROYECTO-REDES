@@ -20,13 +20,13 @@
             <tr>
                 <td>{{ user[0] }}</td>
                 <td>{{ user[1] }}</td>
-                <td><a href="/updateuserrouter?username={{user[0]}}&privilige={{user[1]}}">Modificar</a></td>
-                <td><a href="/deleteuserrouter/{{user[0]}}">Eliminar</a></td>
+                <td><a href="/update_user_router?username={{user[0]}}&privilige={{user[1]}}">Modificar</a></td>
+                <td><a href="/delete_user_router/{{user[0]}}">Eliminar</a></td>
             </tr>
         {% endfor %}
     </table>
     
-    <form action='/cruduserrouter' method='POST'>
+    <form action='/crud_user_router' method='POST'>
         <input type="submit" value="Nuevo Usuario">
     </form>
 

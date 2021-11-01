@@ -20,8 +20,8 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.date_added }}</td>
-                <td><a href="/updateusersystem?_id={{user._id}}&username={{user.username}}">Modificar</a></td>
-                <td><a href="/deleteusersystem/{{user._id}}">Eliminar</a></td>
+                <td><a href="/update_user_system?_id={{user._id}}&username={{user.username}}">Modificar</a></td>
+                <td><a href="/delete_user_system/{{user._id}}">Eliminar</a></td>
             </tr>
         {% endfor %}
     </table>

@@ -1,3 +1,0 @@
-conf t
-username {nombreI} privilege {nivelI} password {contraI}
-exit
