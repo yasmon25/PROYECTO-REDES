@@ -5,23 +5,39 @@
     <title>PROTOCOLOS</title>
   </head>
   <body>    
-	<form action="" method="post">
+	<form action="/rip" method="POST">
 	      <h1>PROTOCOLO RIP</h1>
-	      <label for="">Ruta RIP: </label>
-	      <input type="text" name="ruta-rip">
+	      <label for="">Router: </label>
+	      <select name="RIPopcion" id="RIPopcion">
+			  <option value="R1">R1</option>
+			  <option value="R2">R2</option>
+			  <option value="R3">R3</option>
+			  <option value="R4">R4</option>
+		  </select>
  	      <input type="submit" value="Enviar">
   	</form>
 
-	<form action="" method="post">
+	<form action="/ospf" method="POST">
 	      <h1>PROTOCOLO OSPF</h1>
-	      <label for="">Process ID: </label>
-	      <input type="text" name="process-id">
-	      <label for="">Direcciòn de Red: </label>
-	      <input type="text" name="direccion-red">
-	      <label for="">WILDCARD: </label>
-	      <input type="text" name="wildcard">
-	      <label for="">Àrea ID: </label>
-	      <input type="text" name="area-id">
+	      <label for="">Router: </label>
+	      <select name="OSPFopcion" id="OSPFopcion">
+			  <option value="R1">R1</option>
+			  <option value="R2">R2</option>
+			  <option value="R3">R3</option>
+			  <option value="R4">R4</option>
+		  </select>
+ 	      <input type="submit" value="Enviar">
+  	</form>
+	
+	<form action="/eigrp" method="POST">
+	      <h1>PROTOCOLO OSPF</h1>
+	      <label for="">Router: </label>
+	      <select name="EIGRPopcion" id="EIGRPopcion">
+			  <option value="R1">R1</option>
+			  <option value="R2">R2</option>
+			  <option value="R3">R3</option>
+			  <option value="R4">R4</option>
+		  </select>
  	      <input type="submit" value="Enviar">
   	</form>
   </body>

@@ -1,10 +1,16 @@
-
+import json
 from flask import Flask, render_template, request, redirect, url_for
-
+from conexionSSH import *
 from database.db import new_user, get_user, get_users, delete_user, update_user
 from routers.userrouter import new_user_routers, del_user_routers, get_users_routers
 
 app=Flask(__name__)
+
+with open('dispositivos.json', 'r') as f:
+    hosts = json.load(f)
+
+with open('ipOSPF.json', 'r') as f:
+    hosts2 = json.load(f)
 
 @app.route('/')
 def home ():
@@ -136,6 +142,26 @@ def deleteusersystem(_id):
         return redirect('/crudusersystem')
     except ValueError:
         return error + ValueError + ' '
+
+@app.route('/rip',methods=['POST'])
+def rip():
+    Router = request.form['RIPopcion']
+    print(Router,hosts[Router]['ip'])
+    RIP(Router,hosts[Router]['ip'])
+    return render_template('adminpro.html')
+
+@app.route('/ospf',methods=['POST'])
+def ospf():
+    Router = request.form['OSPFopcion']
+    OSPF(Router,hosts[Router]['ip'])
+    return render_template('adminpro.html')
+
+@app.route('/eigrp',methods=['POST'])
+def eigrp():
+    Router = request.form['EIGRPopcion']
+    EIGRP(Router,hosts[Router]['ip'])
+    return render_template('adminpro.html')    
+    
 
 if __name__ == '__main__':
     app.run()
