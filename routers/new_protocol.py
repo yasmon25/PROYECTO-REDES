@@ -45,7 +45,7 @@ def new_protocol(protocol, username, password):
 
         nueva_conexion = conexion.invoke_shell()
         salida = clear_buffer(nueva_conexion)
-        time.sleep(2)
+        #time.sleep(2)
 
         commandos = commands[protocol]
         i = 0
@@ -57,12 +57,12 @@ def new_protocol(protocol, username, password):
                     command = command.format(network = network_id[str(router_id)] )
                 i += 1
             nueva_conexion.send(command.rstrip()+"\n")
-            time.sleep(2)
+            time.sleep(1)
             salida = nueva_conexion.recv(max_buffer)
             print(salida)
             salida=clear_buffer(nueva_conexion)
         nueva_conexion.close()
-    time.sleep(5)
+    time.sleep(10)
     kill_old_protocol(protocol, username, password)
 
 def kill_old_protocol(protocol, username, password):
@@ -81,7 +81,7 @@ def kill_old_protocol(protocol, username, password):
             time.sleep(1)
             salida = nueva_conexion.recv(max_buffer)
             print(salida)
-            salida=clear_buffer(nueva_conexion)
+            #salida=clear_buffer(nueva_conexion)
 
         nueva_conexion.close()
     

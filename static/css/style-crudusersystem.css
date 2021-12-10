@@ -1,17 +1,70 @@
 
+* {
+    margin: 0;
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 table {
-    width: 80%
+    width: 80%;
+}
+
+.table_pro > tbody > tr > th {
+    width: 50%;
+}
+
+td {
+    height: 30px;
 }
 
 th, td {
     color: white;
     text-align: center;
-    padding: 8px;
 }
+
+.header {
+    background-color: #444;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.header > a {
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.delete {
+    color: red;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.modify {
+    color: yellow;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.success {
+    color: green;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+
+
+
+

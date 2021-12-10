@@ -1,10 +1,15 @@
-{% block title %}CRUD USUARIOS DE ROUTERS{% endblock %}
 
 {% block content %}
 <head>
     <title>REDES</title>
   </head>
   <body>    
+    <div class="header">
+        <a href="http://127.0.0.1:5000/menu">Menu</a>
+        <a href="http://127.0.0.1:5000/admin_pro">Administración de protocolos</a>
+        <a href="http://127.0.0.1:5000/crud_user_router">Usuarios de routers</a>
+        <a href="http://127.0.0.1:5000/crud_user_system">Usuarios del sistema</a>	
+    </div>
 	<main>
 	  <h1>CRUD Usuarios de Routers</h1>
 	</main>
@@ -20,19 +25,15 @@
             <tr>
                 <td>{{ user[0] }}</td>
                 <td>{{ user[1] }}</td>
-                <td><a href="/update_user_router?username={{user[0]}}&privilige={{user[1]}}">Modificar</a></td>
-                <td><a href="/delete_user_router/{{user[0]}}">Eliminar</a></td>
+                <td><a class="modify" href="/update_user_router?username={{user[0]}}&privilige={{user[1]}}">Modificar</a></td>
+                <td><a class="delete" href="/delete_user_router/{{user[0]}}">Eliminar</a></td>
             </tr>
         {% endfor %}
     </table>
     
-    <form action='/crud_user_router' method='POST'>
+    <form class="form_input" action='/crud_user_router' method='POST'>
         <input type="submit" value="Nuevo Usuario">
     </form>
-
-    <p class="text--center">¿Deseas Regresar al menù? <a href="http://127.0.0.1:5000/menu">Menù</a> <svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg></p>
 	
   </body>
 {% endblock %}

@@ -28,8 +28,19 @@ input, select {
   padding: 5px;
   margin-bottom: 20px;
 }
+.form_input {
+  width: 250px;
+}
+.inputs_pro {
+    width: 600px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.inputs_pro > input {
+    width: 30%;
+}
 input[type="submit"] {
-  width: 30%;
   margin: auto;
   background: #333;
   color: white;
