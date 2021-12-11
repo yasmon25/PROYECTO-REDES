@@ -1,10 +1,13 @@
-{% block title %}USUARIOS DE ROUTER{% endblock %}
-
 {% block content %}
 <head>
     <title>USUARIO ROUTER</title>
   </head>
   <body>    
+    <div class="header">
+        <a href="http://127.0.0.1:5000/admin_pro">Administración de protocolos</a>
+        <a href="http://127.0.0.1:5000/crud_user_router">Usuarios de routers</a>
+        <a href="http://127.0.0.1:5000/crud_user_system">Usuarios del sistema</a>	
+    </div> 
 	
 	<form action="/update_user_router" method="POST">
 	      <h1>USUARIO DEL ROUTER</h1>
@@ -20,12 +23,10 @@
   </body>
 {% endblock %}
 
-
-
-
 {% block scripts %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{{url_for('static',filename='css/style-newform.css')}}" >
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-crudusersystem.css')}}" >
 {% endblock %}

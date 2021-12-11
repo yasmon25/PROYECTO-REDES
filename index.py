@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from routers.new_protocol import get_protocol, new_protocol as new_protocol_routers
 from database.db import new_user, get_user, get_users, delete_user, update_user
 from routers.user_router import new_user_routers, del_user_routers, get_users_routers
+from topologia.topologia import main_topologia
+import _thread
+
 
 app=Flask(__name__)
 
@@ -19,13 +22,13 @@ def login ():
         try:
             response = get_user(username, password)
             if response:
-                return redirect('/menu')
+                return redirect('/crud_user_system')
             else:
                 return redirect('/login')
         except ValueError:
             return 'ERROR (login): ' + ValueError
     else:
-	    return render_template('login.html')      
+	    return render_template('login.html')
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro ():
@@ -45,6 +48,7 @@ def registro ():
 
 @app.route('/menu')
 def menu ():
+
 	return render_template('menu.html')
 
 @app.route('/admin_pro', methods=['GET', 'POST'])
@@ -115,14 +119,17 @@ def delete_user_router(username):
     except ValueError:
         return error + ValueError + ' '
 
-@app.route('/crud_user_system')
+@app.route('/crud_user_system', methods=['GET', 'POST'])
 def crud_user_system():
-    users = get_users()
+    if request.method == 'POST':
+	    return render_template('registro.html')
+    else:
+        users = get_users()
 
-    if users.count() == 0:
-        return redirect('/login')
+        if users.count() == 0:
+            return redirect('/login')
 
-    return render_template('crud_user_system.html', users = users)
+        return render_template('crud_user_system.html', users = users)
 
 @app.route('/update_user_system', methods=['GET', 'POST'])
 def update_user_system ():
@@ -157,6 +164,7 @@ def delete_user_system(_id):
     
 
 if __name__ == '__main__':
+    _thread.start_new_thread(main_topologia, ())
     app.run()
 
 

@@ -5,9 +5,9 @@
         "version 2",
         "network {network}",
         "network 10.0.5.0",
-        "no auto-summary",
-        "exit",
-        "exit"
+        "redistribute ospf 1",
+        "redistribute eigrp 1",
+        "no auto-summary"
     ],
     "OSPF": [
         "conf ter",
@@ -15,15 +15,15 @@
         "network {network} area 0",
         "network {network} area 0",
         "network {network} area 0",
-        "exit",
-        "exit"
+        "redistribute rip subnets",
+        "redistribute eigrp 1 subnets"
     ],
     "EIGRP": [
         "conf ter",
         "router eigrp 1",
         "network 10.0.5.0",
         "network {network}",
-        "exit",
-        "exit"    
+        "redistribute ospf 1",
+        "redistribute rip" 
     ]
 }

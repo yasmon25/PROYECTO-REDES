@@ -1,24 +1,30 @@
-{% block title %}ADMINISTRACIÒN DE PROTOCOLOS{% endblock %}
-
 {% block content %}
 <head>
     <title>PROTOCOLOS</title>
   </head>
-  <body>
-    <table>
+  <body> 
+    <div class="header">
+        <a href="http://127.0.0.1:5000/menu">Menu</a>
+        <a href="http://127.0.0.1:5000/admin_pro">Administración de protocolos</a>
+        <a href="http://127.0.0.1:5000/crud_user_router">Usuarios de routers</a>
+        <a href="http://127.0.0.1:5000/crud_user_system">Usuarios del sistema</a>	
+    </div>  
+	<main>
+	  <h1>Administración de Protocolos</h1>
+	</main>
+    <table class="table_pro">
         <tr>
             <th>Router</th>
             <th>Protocolo activo</th>
         </tr>
         {% for id_router in range(4) %}    
             <tr>
-                <td>R{{ id_router }}</td>
-                <td>{{ actual_protocol }}</td>
+                <td>R{{ id_router + 1 }}</td>
+                <td class="success">{{ actual_protocol }}</td>
             </tr>
         {% endfor %}
     </table>
-    <form action="/admin_pro" method="POST">
-	      <h1>Selección de nuevo Protocolo</h1>
+    <form class="inputs_pro" action="/admin_pro" method="POST">
 	      <input type="submit" name="new_protocol" value="RIP">
 	      <input type="submit" name="new_protocol" value="OSPF">
 	      <input type="submit" name="new_protocol" value="EIGRP">
@@ -33,5 +39,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {% endblock %}
 {% block styles %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" >
 <link rel="stylesheet" href="{{url_for('static',filename='css/style-newform.css')}}" >
+<link rel="stylesheet" href="{{url_for('static',filename='css/style-crudusersystem.css')}}" >
 {% endblock %}

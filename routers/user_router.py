@@ -1,83 +1,108 @@
-import time, json
-from netmiko import ConnectHandler
+import time, json, paramiko
 
 # Obtener las ip's de los routers
 #with open('./dispositivos.json', 'r') as f:
 #    hosts = json.load(f)
 
 hosts = {
-	"R1": {"ip": "10.0.1.254"},
-	"R2": {"ip": "10.0.2.254"},
-	"R3": {"ip": "10.0.3.254"},
-	"R4": {"ip": "10.0.4.254"}
+	"1": {"ip": "10.0.1.254"},
+	"2": {"ip": "10.0.2.254"},
+	"3": {"ip": "10.0.3.254"},
+	"4": {"ip": "10.0.4.254"}
 }
 
-# Ejecutar comandos
-def exec_commands(comandos):
-    try:
-        for host in hosts.keys():  
-     
-            # Hacer conexión con el router
-            connection = ConnectHandler(hosts[host]['ip'], device_type='cisco_ios', username='root', password='root')
-            #time.sleep(1)
-
-            for comando in comandos:
-                print(connection.send_command_timing(comando))
-                #time.sleep(1)
-            
-            connection.disconnect()
-    except ValueError:
-        return 'EROR(new_user): ' + ValueError + ' '
-    return ''
+max_buffer = 65535
+def clear_buffer(conexion):
+    if conexion.recv_ready():
+        return conexion.recv(max_buffer)
 
 # Agregar un nuevo usuario
 def new_user_routers(username, password, privilige):
 
-    comandos = ["enable", "conf terminal", "username " + username + " privilege " + privilige + " secret " + password, "exit", "write"]
+    commands = ["conf terminal", 
+                "username " + username + 
+                " privilege " + privilige + 
+                " secret " + password,
+                "exit", 
+                "write"]
 
-    try:
-        exec_commands(comandos)
-        return ''    
-    except ValueError:
-        return 'EROR(new_user): ' + ValueError + ' '
+    for router_id in range(1,5):
+        conexion = paramiko.SSHClient()
+        conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        conexion.connect(hosts[str(router_id)]["ip"], username="root", password="root", look_for_keys=False, allow_agent=False)
+
+        nueva_conexion = conexion.invoke_shell()
+        salida = clear_buffer(nueva_conexion)
+        #time.sleep(1)
+
+        for command in commands:
+
+            nueva_conexion.send(command.rstrip()+"\n")
+            time.sleep(1)
+            salida = nueva_conexion.recv(max_buffer)
+            print(salida)
+            salida=clear_buffer(nueva_conexion)
+
+        nueva_conexion.close()
+    return ''
             
 # Eliminar usuario
 def del_user_routers(username):
-
-    if username == 'root':
-        return 'ERROR(del_user): No se puede eliminar el usuario root'
     
-    comandos = ["enable", "conf terminal", "no username " + username, "exit", "write"]
+    commands = ["conf terminal", "no username " + username, "exit", "write"]
 
-    try:
-        exec_commands(comandos)
-        return ''    
-    except ValueError:
-        return 'EROR(del_user): ' + ValueError + ' '
+    for router_id in range(1,5):
+        conexion = paramiko.SSHClient()
+        conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        conexion.connect(hosts[str(router_id)]["ip"], username="root", password="root", look_for_keys=False, allow_agent=False)
+
+        nueva_conexion = conexion.invoke_shell()
+        salida = clear_buffer(nueva_conexion)
+        #time.sleep(1)
+
+        for command in commands:
+
+            nueva_conexion.send(command.rstrip()+"\n")
+            time.sleep(1)
+            salida = nueva_conexion.recv(max_buffer)
+            print(salida)
+            salida=clear_buffer(nueva_conexion)
+
+        nueva_conexion.close()
+    return ''
 
 # Obtener usuarios
 def get_users_routers():
-    connection = ConnectHandler(hosts['R1']["ip"], device_type='cisco_ios', username='root', password='root')
-    salida = connection.send_command_timing('show running-config | include username')
-    
-    arr = salida.split()
 
-    if arr[0] != 'username':
-        for i in range(len(arr)):
-            if arr[i] == 'username':
-                arr = arr[(i+1):]
-                break
-    times = len(arr) / 7
+    conexion = paramiko.SSHClient()
+    conexion.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    conexion.connect("10.0.4.254", username="root", password="root", look_for_keys=False, allow_agent=False)
 
-    users = []
-    for i in range(int(times)):
-        users.append([arr[i*7 + 1], arr[i*7 + 3]])
+    nueva_conexion = conexion.invoke_shell()
+    salida = clear_buffer(nueva_conexion)
+    time.sleep(1)
 
-    return users
+    nueva_conexion.send("show running-config | include username\n")
+    time.sleep(1)
+    salida = nueva_conexion.recv(max_buffer)
+    #print(salida)
+    users = salida
+    salida=clear_buffer(nueva_conexion)
+
+    nueva_conexion.close()
+
+    final = []
+    users = users.decode().split('\n')
+    for user in users:
+        if 'privilege' in user:
+            aux = user.split()
+            final.append([aux[1], aux[3]])
+
+    return final
 
 if __name__ == '__main__':
     
-    new_user_routers('Prueba', '12345', '14')
+    #new_user_routers('Prueba', '12345', '14')
     #del_user_routers('Yasmin')
 
     print(get_users_routers())

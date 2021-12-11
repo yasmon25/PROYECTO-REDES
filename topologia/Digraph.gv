@@ -1,0 +1,15 @@
+// Network
+digraph {
+	"R4.teamdinamita.mx"
+	"R4.teamdinamita.mx" -> "R3.teamdinamita.mx"
+	"R4.teamdinamita.mx" -> "R2.teamdinamita.mx"
+	"R3.teamdinamita.mx"
+	"R3.teamdinamita.mx" -> "R1.teamdinamita.mx"
+	"R3.teamdinamita.mx" -> "R4.teamdinamita.mx"
+	"R2.teamdinamita.mx"
+	"R2.teamdinamita.mx" -> "R1.teamdinamita.mx"
+	"R2.teamdinamita.mx" -> "R4.teamdinamita.mx"
+	"R1.teamdinamita.mx"
+	"R1.teamdinamita.mx" -> "R3.teamdinamita.mx"
+	"R1.teamdinamita.mx" -> "R2.teamdinamita.mx"
+}
