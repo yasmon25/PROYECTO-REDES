@@ -16,11 +16,13 @@
         <tr>
             <th>Router</th>
             <th>Protocolo activo</th>
+            <th>Modificar</th>
         </tr>
         {% for id_router in range(4) %}    
             <tr>
                 <td>R{{ id_router + 1 }}</td>
                 <td class="success">{{ actual_protocol }}</td>
+                <td> <a href= "http://127.0.0.1:5000/data_router?router=">Informaciòn</a></td>
             </tr>
         {% endfor %}
     </table>

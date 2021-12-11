@@ -4,6 +4,7 @@ from routers.new_protocol import get_protocol, new_protocol as new_protocol_rout
 from database.db import new_user, get_user, get_users, delete_user, update_user
 from routers.user_router import new_user_routers, del_user_routers, get_users_routers
 from topologia.topologia import main_topologia
+from SNMP.snmp import get_data_router
 import _thread
 
 
@@ -21,6 +22,7 @@ def login ():
  
         try:
             response = get_user(username, password)
+            print (response)
             if response:
                 return redirect('/crud_user_system')
             else:
@@ -126,11 +128,11 @@ def crud_user_system():
     else:
         users = get_users()
 
-        if users.count() == 0:
+        '''if users.count() == 0:
             return redirect('/login')
-
+       '''
         return render_template('crud_user_system.html', users = users)
-
+        
 @app.route('/update_user_system', methods=['GET', 'POST'])
 def update_user_system ():
     if request.method == 'POST':
@@ -162,6 +164,20 @@ def delete_user_system(_id):
     except ValueError:
         return error + ValueError + ' '  
     
+@app.route('/data_router/<string:router>')
+def data_router(router):
+    
+    if request.method == 'POST':
+        username = request.form['username']
+        direccion = request.form['direccion']
+        descripcion = request.form['descripcion']
+
+        new_protocol_routers(protocol, username, password)
+
+        return render_template('admin_pro.html', actual_protocol=protocol)
+    else:
+        respuesta=get_data_router()
+        return render_template('data_router.html',respuesta=respuesta)
 
 if __name__ == '__main__':
     _thread.start_new_thread(main_topologia, ())
